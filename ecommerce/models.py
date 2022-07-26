@@ -30,3 +30,4 @@ class Categorie(models.Model):
     
 class MarquePrive(models.Model):
     nom=models.CharField(max_length=100)
+    
