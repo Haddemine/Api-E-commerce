@@ -1,0 +1,78 @@
+{% extends 'ecommerce/basecommerce.html' %}
+
+{% block content %}
+
+<style>
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 90%;
+      margin-left: 50px;
+    }
+    
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #customers tr:hover {background-color: #ddd;}
+    
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: white;
+    }
+
+
+
+    </style>
+    
+    <br><br>
+    <table style="width: 150%; margin-left: 100px;"><tr><td>
+      <h1 style="color: black; margin-left: 16px;">Marque privé</h1>
+    </td><td>
+      <a href="{% url 'ecommerce:addmarque' %}" style="display: inline-block;
+  background-color: teal;
+  border-radius: 10px;
+  color: #eeeeee;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  width: 300px;
+  margin: 5px;"><i class="fas fa-plus"></i>&nbsp; Nouveau marque privé</a>
+    </td></tr></table>
+   
+    
+    
+
+   <br><br><br>
+  
+    <table id="customers" >
+      <tr>
+        <th style="color: black;">Nom</th>
+        <th style="color: black;">Action</th>
+        
+      </tr>
+      {% for marque in marques  %}
+      <tr>
+        <td style="color: black;">{{ marque.nom }}</td>
+        <td>
+          <a class="btn btn-primary" ><i style="color: rgb(62, 197, 62);" class="far fa-edit"></i></a>
+          <a  class="btn btn-success"><i style="color: #0000ff;" class="fas fa-list-ul"></i></a>
+          <a   class="btn btn-danger"><i style="color: rgb(221, 75, 75);" class="fas fa-trash-alt"></i></a>
+      </td>
+    
+      </tr>
+      {% endfor %}
+      
+      
+     
+    </table>
+    
+    <br><br><br>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'ecommerce/basecommerce.html' %}
+
+{% block content %}
+
+<br><br>
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"> -->
+<h1 style="color: black;margin-left: 50px;">Détails de la produit</h2>
+    <br>
+
+    
+
+
+    {% csrf_token %}
+    <fieldset style="width: 90%; margin-left: 50px;">      
+        <table><tr><td> 
+            <div style="margin-left: 100px;color: black;">
+                <br>
+                Nom <pre>     </pre><input type="text" readonly="readonly" style="width: 500px; height: 40px; color: black; background-color:blanchedalmond;" value="{{ nom }}"/><br><br>
+                Prix <pre>     </pre><input type="text" readonly="readonly" style="width: 500px; height: 40px; color: black; background-color:blanchedalmond;" value="{{ prix }}"/><br><br>
+                Fournisseur<pre>    </pre><input type="text" readonly="readonly" style="width: 500px; height: 40px; color: black; background-color:blanchedalmond;" value="{{ fournisseur }}"/><br><br>
+         
+ 
+        <br>
+
+           
+            <a style="display: inline-block;
+            background-color: royalblue;
+            border-radius: 10px;
+            color: #eeeeee;
+            text-align: center;
+            padding: 20px;
+            text-decoration: none;
+            width: 490px;
+            margin: 5px;"
+            href=""
+            type="submit">Ajouter au panier </a>
+            
+        </div>
+    </td> <td>
+        <img style="width: 300px; height: 280px; margin-left: 200px;" src="../../static/ecommerce/images/{{img}}" alt="{{ produit.nom }}"></a>
+    </td></tr></table>
+        <br><br>
+    </fieldset>
+</form>
+<br><br><br>
+<br><br><br>
+
+{% endblock %}

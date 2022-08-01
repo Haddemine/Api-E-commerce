@@ -1,0 +1,57 @@
+{% extends 'ecommerce/basecommerce.html' %}
+
+{% block content %}
+<br><br><br>
+
+
+{% if produits|length_is:"0" %}
+<br><br><br><br><br>
+<div class="content">
+<div class="text" style="text-align: center;">
+      Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
+      Partez de nouveau à l'abordage !
+    </div></div>
+    <br><br><br><br><br>
+{% else %}
+
+    {% for produit in produits  %}
+    <div class="col-sm-4 text-center">
+        <a href="{% url 'ecommerce:detail' produit_id=produit.id %}">
+            <img style="width: 300px; height: 280px;" src="../../static/ecommerce/images/{{produit.image}}" alt="{{ produit.nom }}"></a>
+        
+        <h4>
+          <a href="{% url 'ecommerce:detail' produit_id=produit.id %}" style="display: inline-block;
+          background-color: teal;
+          border-radius: 10px;
+          color: #eeeeee;
+          text-align: center;
+          padding: 20px;
+          text-decoration: none;
+          width: 300px;
+          margin: 5px;"><i class="fas fa-plus"></i>{{ produit.nom }}</a>
+        </h4>
+
+   
+     
+
+    </div>  
+
+{% endfor %}
+
+{% if paginate %}
+  <div class="clearfix"></div>
+  <nav aria-label="">
+    <ul class="pager">
+      {% if produits.has_previous %}
+      <li><a href="?page={{ produits.previous_page_number }}">Précédent
+      </a></li>
+      {% endif %}
+      {% if produits.has_next %}
+      <li><a href="?page={{ produits.next_page_number }}">Suivant</a>
+      </li>
+        {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+{% endif %}
+{% endblock %}
