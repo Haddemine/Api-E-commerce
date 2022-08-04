@@ -1,5 +1,6 @@
+from email import message
 from django.shortcuts import render,get_object_or_404
-from ecommerce.models import  Client, Fournisseur, MarquePrive, Service, Categorie, Produit
+from ecommerce.models import  Client, Fournisseur, MarquePrive, Service, Categorie, Produit, Message
 from django.core.paginator import Paginator, PageNotAnInteger,EmptyPage
 from django.db import transaction, IntegrityError
 
@@ -182,6 +183,20 @@ def detail(request, produit_id):
         'nom':produit.nom,
         # 'form':form,
         # 'errors':form.errors.items()
+    }
+    return render(request, 'ecommerce/detail.html', context)
+
+def reception(request):
+    messages=Message.objects.filter(reciever=request.user)
+    context={
+        'messages':messages
+    }
+    return render(request, 'ecommerce/detail.html', context)
+
+def envoyer(request):
+    messages=Message.objects.filter(sender=request.user)
+    context={
+        'messages':messages
     }
     return render(request, 'ecommerce/detail.html', context)
 
