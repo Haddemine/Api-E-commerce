@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ecommerce.models import  Client, Fournisseur, MarquePrive, Service, Categorie, Produit
+from ecommerce.models import  Client, Fournisseur, MarquePrive, Service, Categorie, Produit, Message
 
 # Register your models here.
 
@@ -19,3 +19,5 @@ class ServiceAdmin(admin.ModelAdmin):
 admin.site.register(MarquePrive)
 admin.site.register(Categorie)
 admin.site.register(Produit)
+
+admin.site.register(Message)
