@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
+
+env = Env() 
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3)%d$*e$f9d-oa#84423z()^han4sg*keo0f%5gk!o3l^zj3rn'
+SECRET_KEY = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','10.0.2.2','.herokuapp.com']
 
 
 # Application definition
@@ -37,8 +41,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django.contrib.sites",
+    "whitenoise.runserver_nostatic",
     'ecommerce',
     'apis',
+    'cart',
+    "allauth",
+    "allauth.account", 
+    "allauth.socialaccount", 
+    "dj_rest_auth.registration",
+    "dj_rest_auth",
+    "rest_framework.authtoken",
+    "drf_spectacular",
     'rest_framework'
 ]
 
@@ -50,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'superapp.urls'
@@ -65,10 +80,15 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.request",
             ],
         },
     },
 ]
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+SITE_ID = 1
 
 WSGI_APPLICATION = 'superapp.wsgi.application'
 
@@ -76,13 +96,15 @@ WSGI_APPLICATION = 'superapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+"default": env.dj_db_url("DATABASE_URL") # new
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -102,11 +124,25 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REST_FRAMEWORK={
-    'DEFAULT_PERMISSION_CLASSES':[
-        'rest_framework.permissions.AllowAny',
-    ]
+REST_FRAMEWORK = {
+"DEFAULT_PERMISSION_CLASSES": [
+"rest_framework.permissions.IsAuthenticated",
+],
+"DEFAULT_AUTHENTICATION_CLASSES": [
+"rest_framework.authentication.SessionAuthentication",
+"rest_framework.authentication.TokenAuthentication", # new
+],
+"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+SPECTACULAR_SETTINGS = {
+"TITLE": "Blog API Project",
+"DESCRIPTION": "A sample blog to learn about DRF",
+"VERSION": "1.0.0",
+# OTHER SETTINGS
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -123,6 +159,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "static"] 
+STATIC_ROOT = BASE_DIR / "staticfiles" 
+STATICFILES_STORAGE ="whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
