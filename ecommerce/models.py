@@ -54,3 +54,9 @@ class Produit(models.Model):
 
      def __str__(self):
         return self.nom
+
+class Message(models.Model):
+     sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
+     reciever = models.ForeignKey(User, related_name="reciever", on_delete=models.CASCADE)
+     msg_content = models.CharField(max_length=500) 
+     created_at = models.DateTimeField(auto_now_add=True)
