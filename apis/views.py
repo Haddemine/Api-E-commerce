@@ -2,6 +2,7 @@ from django.shortcuts import render
 from ecommerce import models
 from .serializers import ClientSerializers,FournisseurSerializers,CategorieSerializers,MarqueSerializers,ProduitSerializers
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 class ListClient(generics.ListCreateAPIView):
     queryset=models.Client.objects.all()
