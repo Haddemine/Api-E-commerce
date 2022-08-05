@@ -4,6 +4,8 @@ apis:
 
 127.0.0.1:8000/api/dj-rest-auth/login
 
+get<list> post get(id) update delete 
+
 127.0.0.1:8000/apis/+[
     client
     client/id
