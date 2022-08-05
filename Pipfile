@@ -13,6 +13,9 @@ djangorestframework = "==3.13.1"
 dj-database-url = "==1.0.0"
 dj-rest-auth = "==2.2.5"
 django-allauth = "==0.51.0"
+drf-spectacular = "==0.23.1"
+pillow = "==9.2.0"
+dj-email-url = "==1.0.5"
 
 [dev-packages]
 
