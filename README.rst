@@ -1,27 +1,49 @@
-e-commerce 
+ce projet est maintenant sur le domain : sup-er-app.herokuapp.com
 
-apis:
+pour runner ce projet en locale vous devez:
 
-http://127.0.0.1:8000/apis/+ [
-        path('client',ListClient.as_view(), name='listclient'),
-        path('client/<int:pk>/',DetailClient.as_view()),
-        path('fournisseur',ListFournisseur.as_view(), name='listfournisseur'),
-        path('fournisseur/<int:pk>/',DetailFournisseur.as_view()),
-        path('categorie',ListCategorie.as_view(), name='listcategorie'),
-        path('categorie/<int:pk>/',DetailCategorie.as_view()),
-        path('marque',ListMarque.as_view(), name='listmarque'),
-        path('marque/<int:pk>/',DetailMarque.as_view()),
-        path('produit',ListProduit.as_view(), name='listproduit'),
-        path('produit/<int:pk>/',DetailProduit.as_view())
-        ]
+-pipenv shell
+-pip install -r requirements.txt
+-python -c "import secrets; print(secrets.token_urlsafe())"
 
+après creer un fichier '.env'
 
-django : have
+ajouter : [
 
-            many functions
-
-django : miss 
-            cart , delete and update categorie, produit, marque
+DEBUG=True
+SECRET_KEY=votre sekret key
+DATABASE_URL=sqlite:///db.sqlite3
 
 
-I work on cart right now
+]
+
+les apis de partie rest_framework sont:
+
+127.0.0.1:8000/api/dj-rest-auth/registration/
+
+127.0.0.1:8000/api/dj-rest-auth/login
+
+get<list> post get(id) update delete 
+
+127.0.0.1:8000/apis/+[
+    client
+    client/id
+    fournisseur
+    fournisseur/id
+    produit
+    produit/id
+    categorie
+    categorie/id
+    marque
+    marque/id
+]
+
+127.0.0.1:8000/api/dj-rest-auth/logout
+
+127.0.0.1:8000/api/dj-rest-auth/password/reset
+
+127.0.0.1:8000/api/dj-rest-auth/password/reset/confirm
+
+127.0.0.1:8000/api/schema/redoc/
+
+127.0.0.1:8000/api/schema/swagger-ui/
