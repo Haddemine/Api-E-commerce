@@ -96,7 +96,7 @@ def loginclient(request):
     uuu = request.data['username']
     ppp = request.data['password']
     try:
-        u=User.objects.get(username=uuu,password=ppp)
+        u=authenticate(username=uuu,password=ppp)
     except:
         return Response(
             {
@@ -137,7 +137,7 @@ def loginfournisseur(request):
     uuu = request.data['username']
     ppp = request.data['password']
     try:
-        u=User.objects.get(username=uuu,password=ppp)
+        u=authenticate(username=uuu,password=ppp)
     except:
         return Response(
             {
