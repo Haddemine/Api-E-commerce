@@ -8,7 +8,7 @@ env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = env.str("SECRET_KEY")
+SECRET_KEY = "9UgT6gbc3LhFJTDJ-KnVTyCeAkVpdkWmrY9VYsCyBhA"
 
 DEBUG = env.bool("DEBUG", default=False)
 
