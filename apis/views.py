@@ -132,10 +132,11 @@ def loginclient(request):
 @api_view(['POST'])
 @permission_classes([])
 @authentication_classes([])
-def loginfournisseur(request):
+def loginfournisseur(data):
+    
 
-    uuu = request.data['username']
-    ppp = request.data['password']
+    uuu = data.get['username']
+    ppp = data.get['password']
     try:
         u=User.objects.get(username=uuu,password=ppp)
     except Exception as e:
