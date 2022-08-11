@@ -1,3 +1,4 @@
+from distutils.debug import DEBUG
 import os
 from pathlib import Path
 from environs import Env
@@ -11,7 +12,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "9UgT6gbc3LhFJTDJ-KnVTyCeAkVpdkWmrY9VYsCyBhA"
 
-DEBUG = env.bool("DEBUG", default=False)
+# DEBUG = env.bool("DEBUG", default=False)
+DEBUG=True
 
 ALLOWED_HOSTS = ['*','10.0.2.2','.herokuapp.com']
 
