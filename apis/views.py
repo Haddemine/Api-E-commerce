@@ -138,14 +138,15 @@ def loginfournisseur(request):
     ppp = request.data['password']
     try:
         u=User.objects.get(username=uuu,password=ppp)
-    except:
-        return Response(
-            {
-                'status': 'error',
-                'message': 'no Frn for this information'
-            },
-            status.HTTP_400_BAD_REQUEST
-        )
+    except Exception as e:
+        raise e
+        # return Response(
+        #     {
+        #         'status': 'error',
+        #         'message': 'no Frn for this information'
+        #     },
+        #     status.HTTP_400_BAD_REQUEST
+        # )
         
     try:
         client = Fournisseur.objects.get(user=u)
@@ -162,11 +163,12 @@ def loginfournisseur(request):
             },
             status.HTTP_200_OK
         )
-    except:
-        return Response(
-            {
-                'status': 'error',
-                'message': 'no Frn for this information'
-            },
-            status.HTTP_400_BAD_REQUEST
-        )
+    except Exception as e:
+        raise e
+        # return Response(
+        #     {
+        #         'status': 'error',
+        #         'message': 'no Frn for this information'
+        #     },
+        #     status.HTTP_400_BAD_REQUEST
+        #)
