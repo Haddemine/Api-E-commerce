@@ -1,0 +1,6 @@
+les funcs django rest qu'n doit faire
+
+1- messagerie beirouk
+2- pannier haddemine et beirouk
+3- creation des autres tables base de donnes
+4- 

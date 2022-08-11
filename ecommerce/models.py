@@ -1,26 +1,26 @@
 from django.db import models
 
-# Create your models here.
+from django.db.models import Q
+from django.contrib.auth.models import User
 
-class User(models.Model):
-    nom=models.CharField(max_length=100)
-    nni=models.IntegerField()
-    telephone=models.IntegerField()
-    email=models.CharField(max_length=200)
-    adresse=models.CharField(max_length=50)
-    
+class Client(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    telephone = models.CharField(max_length=10)
+    sexe = models.CharField(max_length=10)
+    description = models.TextField(max_length=400, default="", editable=False)
+    adresse = models.CharField(max_length=100, default="", editable=False)
     def __str__(self):
-        return self.nom
-    
-class Client(User):
+        return self.user.first_name
+
+class Fournisseur(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    telephone = models.CharField(max_length=10)
+    image = models.ImageField(upload_to="")
+    status = models.CharField(max_length=20)
+    nom_boutique = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.nom
-
-class Fournisseur(User):
-
-    def __str__(self):
-        return self.nom
+        return self.user.first_name
 
 
     
