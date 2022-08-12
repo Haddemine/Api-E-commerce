@@ -101,6 +101,7 @@ def loginclient(request):
         return Response(
             {
                 'status': 'error',
+                'token': 'null',
                 'message': 'no client for this information',
                 'data': {
                     'nom':'null',
@@ -156,6 +157,7 @@ def loginfournisseur(request):
             {
                 'status': 'error',
                 'message': 'no Frn for this information',
+                'token': 'null',
                 'data': {
                     'nom':'null',
                     'telephone':'null'
@@ -188,6 +190,7 @@ def loginfournisseur(request):
         return Response(
             {
                 'status': 'error',
+                'token': 'null',
                 'message': 'no Frn for this information',
                 'data': {
                     'nom':'null',
