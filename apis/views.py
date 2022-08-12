@@ -101,7 +101,11 @@ def loginclient(request):
         return Response(
             {
                 'status': 'error',
-                'message': 'no client for this information'
+                'message': 'no client for this information',
+                'data': {
+                    'nom':'null',
+                    'telephone':'null'
+                }
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -131,7 +135,10 @@ def loginclient(request):
             {
                 'status': 'error',
                 'message': 'no client for this information',
-                'data': 'null'
+                'data': {
+                    'nom':'null',
+                    'telephone':'null'
+                }
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -149,7 +156,10 @@ def loginfournisseur(request):
             {
                 'status': 'error',
                 'message': 'no Frn for this information',
-                'data': 'null'
+                'data': {
+                    'nom':'null',
+                    'telephone':'null'
+                }
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -179,7 +189,10 @@ def loginfournisseur(request):
             {
                 'status': 'error',
                 'message': 'no Frn for this information',
-                'data': 'null'
+                'data': {
+                    'nom':'null',
+                    'telephone':'null'
+                }
             },
             status.HTTP_400_BAD_REQUEST
         )
