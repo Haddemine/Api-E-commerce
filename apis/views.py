@@ -95,18 +95,15 @@ def loginclient(request):
 
     uuu = request.data['username']
     ppp = request.data['password']
+    null = None
     try:
         u=authenticate(username=uuu,password=ppp)
     except:
         return Response(
             {
-                'status': 'error',
-                'token': 'null',
+                'status': False,
                 'message': 'no client for this information',
-                'data': {
-                    'nom':'null',
-                    'telephone':'null'
-                }
+                'data': null
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -121,7 +118,7 @@ def loginclient(request):
 
         return Response(
             {
-                'status': 'success',
+                'status': True,
                 'token': str(token),
                 'message': 'login successe',
                 'data':{
@@ -134,13 +131,9 @@ def loginclient(request):
     except:
         return Response(
             {
-                'status': 'error',
-                'token':'null',
+                'status': False,
                 'message': 'no client for this information',
-                'data': {
-                    'nom':'null',
-                    'telephone':'null'
-                }
+                'data': null
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -151,18 +144,15 @@ def loginfournisseur(request):
 
     uuu = request.data['username']
     ppp = request.data['password']
+    null = None
     try:
         u=authenticate(username=uuu,password=ppp)
     except:
         return Response(
             {
-                'status': 'error',
+                'status': False,
                 'message': 'no Frn for this information',
-                'token': 'null',
-                'data': {
-                    'nom':'null',
-                    'telephone':'null'
-                }
+                'data': null
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -177,7 +167,7 @@ def loginfournisseur(request):
 
         return Response(
             {
-                'status': 'success',
+                'status': True,
                 'token': str(token),
                 'message': 'login successe',
                 'data':{
@@ -190,13 +180,9 @@ def loginfournisseur(request):
     except:
         return Response(
             {
-                'status': 'error',
-                'token': 'null',
+                'status': False,
                 'message': 'no Frn for this information',
-                'data': {
-                    'nom':'null',
-                    'telephone':'null'
-                }
+                'data': null
             },
             status.HTTP_400_BAD_REQUEST
         )
