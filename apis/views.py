@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from ecommerce.models import Client,Fournisseur,Categorie,Service,Message,MarquePrive,Produit
 from .serializers import ClientSerializers,FournisseurSerializers,CategorieSerializers,MarqueSerializers,ProduitSerializers
 from rest_framework import generics
@@ -117,7 +118,12 @@ def loginclient(request):
         return Response(
             {
                 'status': 'success',
-                'token': str(token)
+                'token': str(token),
+                'message': 'login successe',
+                'data':{
+                    'nom':client.user.username,
+                    'telephone':client.telephone
+                }
             },
             status.HTTP_200_OK
         )
@@ -125,7 +131,8 @@ def loginclient(request):
         return Response(
             {
                 'status': 'error',
-                'message': 'no client for this information'
+                'message': 'no client for this information',
+                'data': NULL
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -142,7 +149,8 @@ def loginfournisseur(request):
         return Response(
             {
                 'status': 'error',
-                'message': 'no Frn for this information'
+                'message': 'no Frn for this information',
+                'data': NULL
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -158,7 +166,12 @@ def loginfournisseur(request):
         return Response(
             {
                 'status': 'success',
-                'token': str(token)
+                'token': str(token),
+                'message': 'login successe',
+                'data':{
+                    'nom':client.user.username,
+                    'telephone':client.telephone
+                }
             },
             status.HTTP_200_OK
         )
@@ -166,7 +179,8 @@ def loginfournisseur(request):
         return Response(
             {
                 'status': 'error',
-                'message': 'no Frn for this information'
+                'message': 'no Frn for this information',
+                'data': NULL
             },
             status.HTTP_400_BAD_REQUEST
         )
