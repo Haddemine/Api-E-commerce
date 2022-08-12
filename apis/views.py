@@ -135,6 +135,7 @@ def loginclient(request):
         return Response(
             {
                 'status': 'error',
+                'token':'null',
                 'message': 'no client for this information',
                 'data': {
                     'nom':'null',
