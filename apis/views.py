@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from ecommerce.models import Client,Fournisseur,Categorie,Service,Message,MarquePrive,Produit
 from .serializers import ClientSerializers,FournisseurSerializers,CategorieSerializers,MarqueSerializers,ProduitSerializers
 from rest_framework import generics
@@ -132,7 +131,7 @@ def loginclient(request):
             {
                 'status': 'error',
                 'message': 'no client for this information',
-                'data': NULL
+                'data': 'null'
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -150,7 +149,7 @@ def loginfournisseur(request):
             {
                 'status': 'error',
                 'message': 'no Frn for this information',
-                'data': NULL
+                'data': 'null'
             },
             status.HTTP_400_BAD_REQUEST
         )
@@ -180,7 +179,7 @@ def loginfournisseur(request):
             {
                 'status': 'error',
                 'message': 'no Frn for this information',
-                'data': NULL
+                'data': 'null'
             },
             status.HTTP_400_BAD_REQUEST
         )
