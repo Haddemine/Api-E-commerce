@@ -16,8 +16,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
-# @permission_classes([IsAuthenticated])
-# @authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
 class ListClient(generics.ListCreateAPIView):    
     queryset=Client.objects.all()
     serializer_class = ClientSerializers
@@ -96,7 +96,7 @@ def loginclient(request):
     uuu = request.data['username']
     ppp = request.data['password']
     try:
-        u=User.objects.get(username=uuu,password=ppp)
+        u=authenticate(username=uuu,password=ppp)
     except:
         return Response(
             {
@@ -132,22 +132,20 @@ def loginclient(request):
 @api_view(['POST'])
 @permission_classes([])
 @authentication_classes([])
-def loginfournisseur(data):
-    
+def loginfournisseur(request):
 
-    uuu = data.get['username']
-    ppp = data.get['password']
+    uuu = request.data['username']
+    ppp = request.data['password']
     try:
-        u=User.objects.get(username=uuu,password=ppp)
-    except Exception as e:
-        raise e
-        # return Response(
-        #     {
-        #         'status': 'error',
-        #         'message': 'no Frn for this information'
-        #     },
-        #     status.HTTP_400_BAD_REQUEST
-        # )
+        u=authenticate(username=uuu,password=ppp)
+    except:
+        return Response(
+            {
+                'status': 'error',
+                'message': 'no Frn for this information'
+            },
+            status.HTTP_400_BAD_REQUEST
+        )
         
     try:
         client = Fournisseur.objects.get(user=u)
@@ -164,12 +162,11 @@ def loginfournisseur(data):
             },
             status.HTTP_200_OK
         )
-    except Exception as e:
-        raise e
-        # return Response(
-        #     {
-        #         'status': 'error',
-        #         'message': 'no Frn for this information'
-        #     },
-        #     status.HTTP_400_BAD_REQUEST
-        #)
+    except:
+        return Response(
+            {
+                'status': 'error',
+                'message': 'no Frn for this information'
+            },
+            status.HTTP_400_BAD_REQUEST
+        )
