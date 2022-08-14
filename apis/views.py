@@ -103,7 +103,7 @@ def loginclient(request):
                 'status': 'error',
                 'message': 'no client for this information'
             },
-            status.HTTP_400_BAD_REQUEST
+            status.HTTP_200_OK
         )
         
     try:
@@ -127,7 +127,7 @@ def loginclient(request):
                 'status': 'error',
                 'message': 'no client for this information'
             },
-            status.HTTP_400_BAD_REQUEST
+            status.HTTP_200_OK
         )
 @api_view(['POST'])
 @permission_classes([])
@@ -144,7 +144,7 @@ def loginfournisseur(request):
                 'status': 'error',
                 'message': 'no Frn for this information'
             },
-            status.HTTP_400_BAD_REQUEST
+            status.HTTP_200_OK
         )
         
     try:
@@ -168,5 +168,5 @@ def loginfournisseur(request):
                 'status': 'error',
                 'message': 'no Frn for this information'
             },
-            status.HTTP_400_BAD_REQUEST
+            status.HTTP_200_OK
         )
