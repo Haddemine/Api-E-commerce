@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 
 
 class Client(User):
-    telephone = models.CharField(max_length=10)
-    sexe = models.CharField(max_length=10)
-    description = models.TextField(max_length=400, default="", editable=False)
-    adresse = models.CharField(max_length=100, default="", editable=False)
+    telephone = models.CharField(max_length=10, blank=True)
+    sexe = models.CharField(max_length=10, blank=True)
+    description = models.TextField(max_length=400, default="", editable=False, blank=True)
+    adresse = models.CharField(max_length=100, default="", editable=False, blank=True)
     class Meta:
         verbose_name = 'Client'
     def __str__(self):
@@ -48,7 +48,7 @@ class MarquePrive(models.Model):
 class Produit(models.Model):
      available= models.BooleanField(default=True)
      nom= models.CharField(max_length=200)
-     prix = models.DecimalField(max_digits=10, decimal_places=7)
+     prix = models.DecimalField(max_digits=10, decimal_places=4)
      description= models.CharField(max_length=200)
      fournisseurs= models.ForeignKey(Fournisseur, on_delete=models.CASCADE, null=True)
      marqueprives= models.ForeignKey(MarquePrive, on_delete=models.CASCADE)
