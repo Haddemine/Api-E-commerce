@@ -8,6 +8,8 @@ from apis.views import *
 app_name='apis'
 urlpatterns=[
     path('loginclient/', loginclient, name='loginclient'),
+    path('registerclient/', registerclient, name='registerclient'),
+    path('home/', home, name='home'),
     path('loginfournisseur/', loginfournisseur, name='loginclient'),
     path('client/',ListClient.as_view(), name='listclient'),
     path('client/<int:pk>/',DetailClient.as_view()),
