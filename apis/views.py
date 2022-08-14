@@ -16,8 +16,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
-@permission_classes([IsAuthenticated])
-@authentication_classes([TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+# @authentication_classes([TokenAuthentication])
 class ListClient(generics.ListCreateAPIView):    
     queryset=Client.objects.all()
     serializer_class = ClientSerializers
@@ -32,8 +32,7 @@ class DetailClient(generics.RetrieveUpdateDestroyAPIView):
     queryset=Client.objects.all()
     serializer_class= ClientSerializers   
     
-@permission_classes([IsAuthenticated])
-@authentication_classes([TokenAuthentication])
+
 class ListFournisseur(generics.ListCreateAPIView):
     queryset=Fournisseur.objects.all()
     serializer_class= FournisseurSerializers  
@@ -75,15 +74,12 @@ class DetailMarque(generics.RetrieveUpdateDestroyAPIView):
     serializer_class= MarqueSerializers 
 
 
-@permission_classes([IsAuthenticated])
-@authentication_classes([TokenAuthentication])
+
 class ListProduit(generics.ListCreateAPIView):
     queryset=Produit.objects.all()
     serializer_class= ProduitSerializers  
 
 
-@permission_classes([IsAuthenticated])
-@authentication_classes([TokenAuthentication])
 class DetailProduit(generics.RetrieveUpdateDestroyAPIView):
     queryset=Produit.objects.all()
     serializer_class= ProduitSerializers   

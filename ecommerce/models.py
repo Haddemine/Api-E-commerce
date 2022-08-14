@@ -3,24 +3,27 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
 
-class Client(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Client(User):
     telephone = models.CharField(max_length=10)
     sexe = models.CharField(max_length=10)
     description = models.TextField(max_length=400, default="", editable=False)
     adresse = models.CharField(max_length=100, default="", editable=False)
+    class Meta:
+        verbose_name = 'Client'
     def __str__(self):
-        return self.user.username
+        return self.username
 
-class Fournisseur(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Fournisseur(User):
     telephone = models.CharField(max_length=10)
     image = models.ImageField(upload_to="")
     status = models.CharField(max_length=20)
     nom_boutique = models.CharField(max_length=100)
+    class Meta:
+        verbose_name = 'Fournisseur'
 
     def __str__(self):
-        return self.user.first_name
+        return self.username
 
 
     
@@ -47,7 +50,7 @@ class Produit(models.Model):
      nom= models.CharField(max_length=200)
      prix = models.DecimalField(max_digits=10, decimal_places=7)
      description= models.CharField(max_length=200)
-     fournisseurs= models.ForeignKey(Fournisseur, on_delete=models.CASCADE)
+     fournisseurs= models.ForeignKey(Fournisseur, on_delete=models.CASCADE, null=True)
      marqueprives= models.ForeignKey(MarquePrive, on_delete=models.CASCADE)
      categories= models.ForeignKey(Categorie, on_delete=models.CASCADE, null=True)
      image=models.ImageField(upload_to='ecommerce/static/ecommerce/images',null=True)
