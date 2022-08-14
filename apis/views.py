@@ -16,8 +16,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
-# @permission_classes([IsAuthenticated])
-# @authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
 class ListClient(generics.ListCreateAPIView):    
     queryset=Client.objects.all()
     serializer_class = ClientSerializers
@@ -32,7 +32,8 @@ class DetailClient(generics.RetrieveUpdateDestroyAPIView):
     queryset=Client.objects.all()
     serializer_class= ClientSerializers   
     
-
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
 class ListFournisseur(generics.ListCreateAPIView):
     queryset=Fournisseur.objects.all()
     serializer_class= FournisseurSerializers  
@@ -83,6 +84,29 @@ class ListProduit(generics.ListCreateAPIView):
 class DetailProduit(generics.RetrieveUpdateDestroyAPIView):
     queryset=Produit.objects.all()
     serializer_class= ProduitSerializers   
+
+@api_view(['GET'])
+@permission_classes([])
+@authentication_classes([])
+def detailplus(request, idd):
+    try:
+        prod=Produit.objects.get(id=idd)
+        
+        
+    except:
+        return Response(
+            {
+                'message': 'produit mahu 5alg'
+            },
+            status.HTTP_200_OK
+        )
+    
+    dataa = ProduitSerializers(prod, many=False)
+    
+    return Response(
+        dataa.data,
+        status.HTTP_200_OK
+    )
 
 @api_view(['POST'])
 @permission_classes([])
@@ -182,3 +206,85 @@ def loginfournisseur(request):
             },
             status.HTTP_400_BAD_REQUEST
         )
+
+        
+@api_view(['POST'])
+@permission_classes([])
+@authentication_classes([])
+def registerclient(request):
+        
+    try:
+        nom = request.data['nom']
+        prenom = request.data['prenom']
+        email = request.data['email']
+        username = request.data['username']
+        password = request.data['password']
+        telephone = request.data['telephone']
+        sexe = request.data['sexe']
+        description = request.data['description']
+        adresse = request.data['adresse']
+        client = Client.objects.create(first_name=nom, last_name=prenom, email=email,username=username,telephone=telephone,sexe=sexe,description=description,adresse=adresse)
+        client.set_password(password)
+        client.save()
+    except:
+        return Response(
+            {
+                'status': 'error',
+                'message': 'register failed'
+            },
+            status.HTTP_200_OK
+        )
+    return Response(
+            {
+                'email': client.email,
+                'nom': client.first_name,
+                'prenom': client.last_name,
+                'username': client.username,
+                'telephone': client.telephone,
+                'sexe': client.sexe,
+                'description': client.description,
+                'adresse': client.adresse
+            },
+            status.HTTP_200_OK
+        )
+
+
+
+@api_view(['GET'])
+@permission_classes([])
+@authentication_classes([])
+def home(request):
+    
+    tok=str(request.META.get('HTTP_AUTHORIZATION'))[6:]
+    if len(tok)<1:
+        return Response(
+            {
+                'message':'faut que vous connecter'
+            },
+            status.HTTP_200_OK
+        )
+    u = Token.objects.get(key=tok).client
+    try:
+        # client = Client.objects.get(user=u)
+        print(u)
+    except:
+        return Response(
+            {
+                'message':'client n existe pas'
+            },
+            status.HTTP_200_OK
+        )
+    return Response(
+            {
+                'email': u.email,
+                'nom': u.first_name,
+                'prenom': u.last_name,
+                'username': u.username,
+                'telephone': u.telephone,
+                'sexe': u.sexe,
+                'description': u.description,
+                'adresse': u.adresse
+            },
+            status.HTTP_200_OK
+        )
+    
