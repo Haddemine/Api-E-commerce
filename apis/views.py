@@ -1,7 +1,7 @@
+from urllib import response
 from ecommerce.models import Client,Fournisseur,Categorie,Service,Message,MarquePrive,Produit
 from .serializers import ClientSerializers,FournisseurSerializers,CategorieSerializers,MarqueSerializers,ProduitSerializers
 from rest_framework import generics
-from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -22,10 +22,6 @@ class ListClient(generics.ListCreateAPIView):
     queryset=Client.objects.all()
     serializer_class = ClientSerializers
 
-    # return Response(
-    #     serializer.data,
-    #     status=status.HTTP_200_OK
-    # )
 @permission_classes([IsAuthenticated])
 @authentication_classes([TokenAuthentication])
 class DetailClient(generics.RetrieveUpdateDestroyAPIView):
@@ -88,6 +84,32 @@ class DetailProduit(generics.RetrieveUpdateDestroyAPIView):
     queryset=Produit.objects.all()
     serializer_class= ProduitSerializers   
 
+@api_view(['GET'])
+@permission_classes([])
+@authentication_classes([])
+def detailplus(request, idd):
+    try:
+        prod=Produit.objects.get(id=idd)
+        
+        
+    except:
+        return Response(
+            {
+                'message': 'produit mahu 5alg'
+            },
+            status.HTTP_200_OK
+        )
+    
+    dataa = ProduitSerializers(prod, many=False)
+    
+    return Response(
+        dataa.data,
+        status.HTTP_200_OK
+    )
+    
+    
+
+
 
 @api_view(['POST'])
 @permission_classes([])
@@ -135,10 +157,7 @@ def loginclient(request):
 @api_view(['POST'])
 @permission_classes([])
 @authentication_classes([])
-def registerclient(request):
-
-    
-        
+def registerclient(request):   
     try:
         nom = request.data['nom']
         prenom = request.data['prenom']

@@ -25,6 +25,9 @@ class MarqueSerializers(serializers.ModelSerializer):
         model=models.MarquePrive
 
 class ProduitSerializers(serializers.ModelSerializer):
+    fournisseurs = FournisseurSerializers(many=False)
+    marqueprives = MarqueSerializers(many=False)
+    categories =CategorieSerializers(many=False)
     class Meta:
-        fields = '__all__'
+        fields = ('available','nom','prix','description','image','fournisseurs','categories','marqueprives')
         model=models.Produit
