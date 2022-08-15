@@ -124,16 +124,16 @@ def loginclient(request):
                 'message': 'no client for this information',
                 'data': null
             },
-            status.HTTP_400_BAD_REQUEST
+            status.HTTP_200_OK
         )
         
     try:
-        client = Client.objects.get(user=u)
+        client = u
         #login(request, u)
         try:
-            token = Token.objects.get(user=client.user)
+            token = Token.objects.get(u)
         except:
-            token = Token.objects.create(user=client.user)
+            token = Token.objects.create(u)
 
         return Response(
             {
