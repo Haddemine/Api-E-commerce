@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "701d64d0767cef10e79e70dab98fc5f7cec16487775cced7ce730b4bc27079a1"
+            "sha256": "ed2ad1d8db6fa03af987169ba348b6ce64c0e6902d9be6197f0f1ba5f09c1695"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -198,14 +198,6 @@
             "index": "pypi",
             "version": "==3.13.1"
         },
-        "djangorestframework-simplejwt": {
-            "hashes": [
-                "sha256:a60b09afb27d91ad1d7ac904cc632bd52cecead8f389f0fa1532ceb0fb757a74",
-                "sha256:bcc4cb74dcb637ca1e17eed35276bd618ab19491f8c53e65dee6271177c355e8"
-            ],
-            "index": "pypi",
-            "version": "==5.2.0"
-        },
         "drf-spectacular": {
             "hashes": [
                 "sha256:2e42ae16717a5c3b2ae8632ac2b92f7eeb7b4fb9a941bc7879a92343e50ddeb6",
@@ -367,7 +359,9 @@
             "version": "==2.21"
         },
         "pyjwt": {
-            "extras": [],
+            "extras": [
+                "crypto"
+            ],
             "hashes": [
                 "sha256:72d1d253f32dbd4f5c88eaf1fdc62f3a19f676ccbadb9dbc5d07e951b2b26daf",
                 "sha256:d42908208c699b3b973cbeb01a969ba6a96c821eefb1c5bfe4c390c01d67abba"
@@ -476,7 +470,7 @@
                 "sha256:7c5599b102feddaa661c826c56ab4fee28bfd17f5abca1ebbe3e7f19d7c97983",
                 "sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349"
             ],
-            "index": "pypi",
+            "markers": "python_version >= '3.7' and python_version < '4'",
             "version": "==2.28.1"
         },
         "requests-oauthlib": {
@@ -489,11 +483,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:63f463b90ff5e0a1422010100268fd688e15c44ae0798659013c8412963e15e4",
-                "sha256:9b5d2cb8df48f005825654e0cb17217418317e4d996c035f0bca7cbaeb8acf51"
+                "sha256:7c7854ee1429a240090297628dc9f75b35318d193537968e2dc14010ee2f5bca",
+                "sha256:dc2662692f47d99cb8ae15a784529adeed535bcd7c277fee0beccf961522baf6"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==64.0.0"
+            "version": "==63.4.1"
         },
         "sqlparse": {
             "hashes": [

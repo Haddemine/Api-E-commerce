@@ -1,7 +1,8 @@
-from ecommerce.models import Client,Fournisseur,Categorie,Service,Message,MarquePrive,Produit
-from .serializers import ClientSerializers,FournisseurSerializers,CategorieSerializers,MarqueSerializers,ProduitSerializers
+from datetime import datetime
+from urllib import response
+from ecommerce.models import Client, Commande,Fournisseur,Categorie,Service,Message,MarquePrive,Produit, commandeitem
+from .serializers import ClientSerializers, CommandeSerializers,FournisseurSerializers,CategorieSerializers,MarqueSerializers,ProduitSerializers
 from rest_framework import generics
-from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -16,15 +17,12 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
-
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
 class ListClient(generics.ListCreateAPIView):    
     queryset=Client.objects.all()
     serializer_class = ClientSerializers
 
-    # return Response(
-    #     serializer.data,
-    #     status=status.HTTP_200_OK
-    # )
 @permission_classes([IsAuthenticated])
 @authentication_classes([TokenAuthentication])
 class DetailClient(generics.RetrieveUpdateDestroyAPIView):
@@ -74,12 +72,15 @@ class DetailMarque(generics.RetrieveUpdateDestroyAPIView):
     serializer_class= MarqueSerializers 
 
 
-
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
 class ListProduit(generics.ListCreateAPIView):
     queryset=Produit.objects.all()
     serializer_class= ProduitSerializers  
 
 
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
 class DetailProduit(generics.RetrieveUpdateDestroyAPIView):
     queryset=Produit.objects.all()
     serializer_class= ProduitSerializers   
@@ -88,10 +89,17 @@ class DetailProduit(generics.RetrieveUpdateDestroyAPIView):
 @permission_classes([])
 @authentication_classes([])
 def detailplus(request, idd):
+    tok=str(request.META.get('HTTP_AUTHORIZATION'))[6:]
+    if len(tok)<1:
+        return Response(
+            {
+                'message':'faut que vous connecter'
+            },
+            status.HTTP_200_OK
+        )
+    u = Token.objects.get(key=tok).user
     try:
         prod=Produit.objects.get(id=idd)
-        
-        
     except:
         return Response(
             {
@@ -106,6 +114,8 @@ def detailplus(request, idd):
         dataa.data,
         status.HTTP_200_OK
     )
+    
+    
 
 @api_view(['POST'])
 @permission_classes([])
@@ -114,71 +124,21 @@ def loginclient(request):
 
     uuu = request.data['username']
     ppp = request.data['password']
-    null = None
     try:
         u=authenticate(username=uuu,password=ppp)
     except:
         return Response(
             {
-                'status': False,
-                'message': 'no client for this information',
-                'data': null
+                'status': 'error',
+                'message': 'no client for this information'
             },
             status.HTTP_200_OK
         )
         
     try:
-        client = u
-        #login(request, u)
-        try:
-            token = Token.objects.get(u)
-        except:
-            token = Token.objects.create(u)
-
-        return Response(
-            {
-                'status': True,
-                'token': str(token),
-                'message': 'login successe',
-                'data':{
-                    'nom':client.user.username,
-                    'telephone':client.telephone
-                }
-            },
-            status.HTTP_200_OK
-        )
-    except:
-        return Response(
-            {
-                'status': False,
-                'message': 'no client for this information',
-                'data': null
-            },
-            status.HTTP_400_BAD_REQUEST
-        )
-@api_view(['POST'])
-@permission_classes([])
-@authentication_classes([])
-def loginfournisseur(request):
-
-    uuu = request.data['username']
-    ppp = request.data['password']
-    null = None
-    try:
-        u=authenticate(username=uuu,password=ppp)
-    except:
-        return Response(
-            {
-                'status': False,
-                'message': 'no Frn for this information',
-                'data': null
-            },
-            status.HTTP_400_BAD_REQUEST
-        )
+        client = Client.objects.get(user=u)
         
-    try:
-        client = Fournisseur.objects.get(user=u)
-        #login(request, u)
+        login(request,u)
         try:
             token = Token.objects.get(user=client.user)
         except:
@@ -186,32 +146,24 @@ def loginfournisseur(request):
 
         return Response(
             {
-                'status': True,
-                'token': str(token),
-                'message': 'login successe',
-                'data':{
-                    'nom':client.user.username,
-                    'telephone':client.telephone
-                }
+                'status': 'success',
+                'token': str(token)
             },
             status.HTTP_200_OK
         )
     except:
         return Response(
             {
-                'status': False,
-                'message': 'no Frn for this information',
-                'data': null
+                'status': 'error',
+                'message': 'no client for this information'
             },
-            status.HTTP_400_BAD_REQUEST
+            status.HTTP_200_OK
         )
-
         
 @api_view(['POST'])
 @permission_classes([])
 @authentication_classes([])
-def registerclient(request):
-        
+def registerclient(request):   
     try:
         nom = request.data['nom']
         prenom = request.data['prenom']
@@ -222,8 +174,10 @@ def registerclient(request):
         sexe = request.data['sexe']
         description = request.data['description']
         adresse = request.data['adresse']
-        client = Client.objects.create(first_name=nom, last_name=prenom, email=email,username=username,telephone=telephone,sexe=sexe,description=description,adresse=adresse)
-        client.set_password(password)
+        user = User.objects.create_user(first_name=nom, last_name=prenom, email=email, username=username)
+        user.set_password(password)
+        user.save()
+        client = Client.objects.create(user=user,telephone=telephone,sexe=sexe,description=description,adresse=adresse)
         client.save()
     except:
         return Response(
@@ -235,10 +189,10 @@ def registerclient(request):
         )
     return Response(
             {
-                'email': client.email,
-                'nom': client.first_name,
-                'prenom': client.last_name,
-                'username': client.username,
+                'email': client.user.email,
+                'nom': client.user.first_name,
+                'prenom': client.user.last_name,
+                'username': client.user.username,
                 'telephone': client.telephone,
                 'sexe': client.sexe,
                 'description': client.description,
@@ -246,9 +200,50 @@ def registerclient(request):
             },
             status.HTTP_200_OK
         )
+    
+@api_view(['POST'])
+@permission_classes([])
+@authentication_classes([])
+def loginfournisseur(request):
 
+    uuu = request.data['username']
+    ppp = request.data['password']
+    try:
+        u=authenticate(username=uuu,password=ppp)
+    except:
+        return Response(
+            {
+                'status': 'error',
+                'message': 'no Frn for this information'
+            },
+            status.HTTP_200_OK
+        )
+        
+    try:
+        client = Fournisseur.objects.get(user=u)
+        
+        login(request, u)
+        try:
+            token = Token.objects.get(user=client.user)
+        except:
+            token = Token.objects.create(user=client.user)
 
-
+        return Response(
+            {
+                'status': 'success',
+                'token': str(token)
+            },
+            status.HTTP_200_OK
+        )
+    except:
+        return Response(
+            {
+                'status': 'error',
+                'message': 'no Frn for this information'
+            },
+            status.HTTP_200_OK
+        )
+        
 @api_view(['GET'])
 @permission_classes([])
 @authentication_classes([])
@@ -262,10 +257,10 @@ def home(request):
             },
             status.HTTP_200_OK
         )
-    u = Token.objects.get(key=tok).client
+    u = Token.objects.get(key=tok).user
     try:
-        # client = Client.objects.get(user=u)
-        print(u)
+        client = Client.objects.get(user=u)
+        print(client)
     except:
         return Response(
             {
@@ -275,15 +270,87 @@ def home(request):
         )
     return Response(
             {
-                'email': u.email,
-                'nom': u.first_name,
-                'prenom': u.last_name,
-                'username': u.username,
-                'telephone': u.telephone,
-                'sexe': u.sexe,
-                'description': u.description,
-                'adresse': u.adresse
+                'email': client.user.email,
+                'nom': client.user.first_name,
+                'prenom': client.user.last_name,
+                'username': client.user.username,
+                'telephone': client.telephone,
+                'sexe': client.sexe,
+                'description': client.description,
+                'adresse': client.adresse
             },
             status.HTTP_200_OK
         )
+
+
+@api_view(['POST'])
+@permission_classes([])
+@authentication_classes([])
+def lancercommande(request):
+    
+    tok=str(request.META.get('HTTP_AUTHORIZATION'))[6:]
+    if len(tok)<1:
+        return Response(
+            {
+                'message':'faut que vous connecter'
+            },
+            status.HTTP_200_OK
+        )
+    u = Token.objects.get(key=tok).user
+    try:
+        client = Client.objects.get(user=u)
+    except:
+        return Response(
+            {
+                'message':'client n existe pas'
+            },
+            status.HTTP_200_OK
+        )
+     
+    desc = request.data['description']
+    payment=request.data['payement']
+    temp=datetime.now()
+    c=Commande.objects.create(client=client,description=desc,modePaiment=payment,created_at=temp,statut="en cours")
+    c.save()
+    
+    items = request.data['items']
+
+    for item in items:
+        idd=item['produit']
+        q=item['quantite']
+        prod=Produit.objects.get(id=idd)
+        ci=commandeitem.objects.create(commande=c,produit=prod,quantite=q)
+        ci.save()
+    
+    return Response(
+        {
+            "message":"im coming mother fuckers"
+        },
+        status.HTTP_202_ACCEPTED
+    )
+    
+    
+@api_view(['GET'])
+@permission_classes([])
+@authentication_classes([])   
+def detailcommande(request,idcmd):
+    try:
+        cmd=Commande.objects.get(id=idcmd)
+    except:
+        return Response(
+            {
+                "message":"cmd doesn't exist"
+            },
+            status.HTTP_202_ACCEPTED
+        )
+    serializer = CommandeSerializers(cmd,many=False)
+    return Response(
+        serializer.data,
+        status.HTTP_200_OK
+    )
+    
+    
+    
+    
+    
     
