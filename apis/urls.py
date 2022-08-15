@@ -23,7 +23,14 @@ urlpatterns=[
     #produit
     path('produit/',ListProduit.as_view(), name='listproduit'),
     path('produit/<int:pk>/',DetailProduit.as_view()),
-    path('detailplus/<int:idd>/', detailplus ,name='detailplus')
-   
+    path('detailplus/<int:idd>/', detailplus ,name='detailplus'),
+    
+    #commande
+    
+    path('lancercommande/', lancercommande ,name='lancercommande'),
+    path('detailcommande/<int:idcmd>/', detailcommande, name='detailcommande')
+    
+    
+    
     
 ]            

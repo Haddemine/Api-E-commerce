@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ecommerce.models import  Client, Fournisseur, MarquePrive, Service, Categorie, Produit, Message
+from ecommerce.models import  *
 
 # Register your models here.
 
@@ -21,3 +21,5 @@ admin.site.register(Categorie)
 admin.site.register(Produit)
 
 admin.site.register(Message)
+admin.site.register(Commande)
+admin.site.register(commandeitem)

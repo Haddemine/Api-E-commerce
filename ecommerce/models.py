@@ -54,7 +54,19 @@ class Produit(models.Model):
 
      def __str__(self):
         return self.nom
-
+    
+class Commande(models.Model):
+    description = models.CharField(max_length=500) 
+    created_at = models.DateTimeField(auto_now_add=True)
+    modePaiment = models.CharField(max_length=50) 
+    statut = models.CharField(max_length=100) 
+    client = models.ForeignKey(Client, related_name="sender", on_delete=models.CASCADE)
+    
+class commandeitem(models.Model):
+    commande = models.ForeignKey(Commande, related_name="commande", on_delete=models.CASCADE)
+    produit = models.ForeignKey(Produit, related_name="sender", on_delete=models.CASCADE)
+    quantite = models.IntegerField()
+    
 class Message(models.Model):
      sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
      reciever = models.ForeignKey(User, related_name="reciever", on_delete=models.CASCADE)

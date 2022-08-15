@@ -31,3 +31,12 @@ class ProduitSerializers(serializers.ModelSerializer):
     class Meta:
         fields = ('available','nom','prix','description','image','fournisseurs','categories','marqueprives')
         model=models.Produit
+class CommandeSerializers(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model=models.Commande
+        
+class commandeitemSerializers(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model=models.commandeitem       
