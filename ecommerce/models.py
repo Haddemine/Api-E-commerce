@@ -10,7 +10,7 @@ class Client(models.Model):
     description = models.TextField(max_length=400, default="", editable=False)
     adresse = models.CharField(max_length=100, default="", editable=False)
     def __str__(self):
-        return self.user.first_name
+        return self.user.username
 
 class Fournisseur(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -124,13 +124,15 @@ def loginclient(request):
 
     uuu = request.data['username']
     ppp = request.data['password']
+    null=None
     try:
         u=authenticate(username=uuu,password=ppp)
     except:
         return Response(
             {
-                'status': 'error',
-                'message': 'no client for this information'
+                'status': False,
+                'message': 'no client for this information',
+                'data': null
             },
             status.HTTP_200_OK
         )
@@ -146,16 +148,22 @@ def loginclient(request):
 
         return Response(
             {
-                'status': 'success',
-                'token': str(token)
+                'status': True,
+                'token': str(token),
+                'message':'login success',
+                'data':{
+                    'telephone':client.telephone,
+                    'sexe':client.sexe
+                }
             },
             status.HTTP_200_OK
         )
     except:
         return Response(
             {
-                'status': 'error',
-                'message': 'no client for this information'
+                'status': False,
+                'message': 'no client for this information',
+                'data': null
             },
             status.HTTP_200_OK
         )
