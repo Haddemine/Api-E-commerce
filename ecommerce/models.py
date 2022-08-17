@@ -1,4 +1,5 @@
 from email.policy import default
+from operator import truediv
 from django.db import models
 
 from django.db.models import Q
@@ -34,7 +35,7 @@ class Service(models.Model):
 
 class Categorie(models.Model):
     nom=models.CharField(max_length=100)
-    image = models.ImageField(upload_to="", default="static/ecommerce/images/index.png")
+    image = models.ImageField(upload_to="", default="static/ecommerce/images/index.png", null=True)
 
     def __str__(self):
         return self.nom
