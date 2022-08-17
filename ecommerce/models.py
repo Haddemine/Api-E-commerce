@@ -48,7 +48,7 @@ class MarquePrive(models.Model):
 class Produit(models.Model):
      available= models.BooleanField(default=True)
      nom= models.CharField(max_length=200)
-     prix = models.DecimalField(max_digits=10, decimal_places=7)
+     prix = models.DecimalField(max_digits=10, decimal_places=2)
      description= models.CharField(max_length=200)
      fournisseurs= models.ForeignKey(Fournisseur, on_delete=models.CASCADE)
      marqueprives= models.ForeignKey(MarquePrive, on_delete=models.CASCADE)
