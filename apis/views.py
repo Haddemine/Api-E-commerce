@@ -180,12 +180,13 @@ def registerclient(request):
         password = request.data['password']
         telephone = request.data['telephone']
         sexe = request.data['sexe']
+        # image= request.data['image']
         description = request.data['description']
         adresse = request.data['adresse']
         user = User.objects.create_user(first_name=nom, last_name=prenom, email=email, username=username)
         user.set_password(password)
         user.save()
-        client = Client.objects.create(user=user,telephone=telephone,sexe=sexe,description=description,adresse=adresse)
+        client = Client.objects.create(user=user, telephone=telephone,sexe=sexe,description=description,adresse=adresse)
         client.save()
     except:
         return Response(
@@ -283,6 +284,7 @@ def home(request):
                 'prenom': client.user.last_name,
                 'username': client.user.username,
                 'telephone': client.telephone,
+                'image': client.image,
                 'sexe': client.sexe,
                 'description': client.description,
                 'adresse': client.adresse
