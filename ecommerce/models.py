@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 
 from django.db.models import Q
@@ -7,6 +8,7 @@ class Client(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     telephone = models.CharField(max_length=10)
     sexe = models.CharField(max_length=10)
+    image = models.ImageField(upload_to="", default="static/ecommerce/images/index.png")
     description = models.TextField(max_length=400, default="", editable=False)
     adresse = models.CharField(max_length=100, default="", editable=False)
     def __str__(self):
@@ -32,6 +34,7 @@ class Service(models.Model):
 
 class Categorie(models.Model):
     nom=models.CharField(max_length=100)
+    image = models.ImageField(upload_to="", default="static/ecommerce/images/index.png")
 
     def __str__(self):
         return self.nom

@@ -336,7 +336,7 @@ def lancercommande(request):
         },
         status.HTTP_202_ACCEPTED
     )
-    
+   
     
 @api_view(['GET'])
 @permission_classes([])
