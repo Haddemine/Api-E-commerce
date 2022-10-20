@@ -5,7 +5,7 @@ from ecommerce.models import Client, Commande, Demande, Favoris,Fournisseur,Cate
 from apis.serializers import ClientSerializers, CommandeSerializers, DemandeSerializers, FavorisSerializers,FournisseurSerializers,CategorieSerializers,MarqueSerializers, PanierSerializers,ProduitSerializers, UserSerializers, commandeitemSerializers
 from rest_framework import generics
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 
 from django.db.models import Q
 
@@ -27,8 +27,6 @@ class ListUser(generics.ListCreateAPIView):
 
 
 @api_view(['POST'])
-@permission_classes([])
-@authentication_classes([])
 def loginfournisseur(request):
 
     uuu = request.data['username']
