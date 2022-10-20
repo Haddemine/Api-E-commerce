@@ -15,7 +15,7 @@ SECRET_KEY = "9UgT6gbc3LhFJTDJ-KnVTyCeAkVpdkWmrY9VYsCyBhA"
 # DEBUG = env.bool("DEBUG", default=False)
 DEBUG=True
 
-ALLOWED_HOSTS = ['*','10.0.2.2','.herokuapp.com']
+ALLOWED_HOSTS = ['*','.herokuapp.com']
 
 
 # Application definition
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django.contrib.sites",
     "whitenoise.runserver_nostatic",
+    "corsheaders"
     
     
     'ecommerce',
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
 ]
 
 ROOT_URLCONF = 'superapp.urls'
@@ -82,6 +84,9 @@ TEMPLATES = [
         },
     },
 ]
+
+CORS_ORIGIN_ALLOW_ALL =True
+
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
