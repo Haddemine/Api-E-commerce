@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django.contrib.sites",
     "whitenoise.runserver_nostatic",
-    "corsheaders"
+    "corsheaders",
     
     
     'ecommerce',
