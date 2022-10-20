@@ -3,13 +3,26 @@ import imp
 from rest_framework import serializers
 from ecommerce import models
 
+from django.contrib.auth.models import User
+
+class UserSerializers(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model=User
+
+class MessageSerializers(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model=models.Message
 
 class ClientSerializers(serializers.ModelSerializer):
+    user = UserSerializers(many=False)
     class Meta:
         fields = '__all__'
         model=models.Client
 
 class FournisseurSerializers(serializers.ModelSerializer):
+    user = UserSerializers(many=False)
     class Meta:
         fields = '__all__'
         model=models.Fournisseur
@@ -35,8 +48,27 @@ class CommandeSerializers(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model=models.Commande
-        
-class commandeitemSerializers(serializers.ModelSerializer):
+class FavorisSerializers(serializers.ModelSerializer):
+    produit=ProduitSerializers(many=False)
     class Meta:
         fields = '__all__'
-        model=models.commandeitem       
+        model=models.Favoris
+        
+class commandeitemSerializers(serializers.ModelSerializer):
+    commande = CommandeSerializers(many=False)
+    class Meta:
+        fields = '__all__'
+        model=models.Commandeitem       
+
+
+class PanierSerializers(serializers.ModelSerializer):
+    produit=ProduitSerializers(many=False)
+    client=ClientSerializers(many=False)
+    class Meta:
+        fields = '__all__'
+        model=models.Panier
+
+class DemandeSerializers(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model=models.Demande

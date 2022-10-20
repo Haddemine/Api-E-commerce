@@ -22,4 +22,10 @@ admin.site.register(Produit)
 
 admin.site.register(Message)
 admin.site.register(Commande)
-admin.site.register(commandeitem)
+admin.site.register(Commandeitem)
+
+admin.site.register(Favoris)
+
+admin.site.register(Panier)
+
+admin.site.register(Demande)

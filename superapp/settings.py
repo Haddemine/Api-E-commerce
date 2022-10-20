@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'ecommerce',
     'apis',
     'cart',
+    'fournisseur',
     
     
     'rest_framework.authtoken',

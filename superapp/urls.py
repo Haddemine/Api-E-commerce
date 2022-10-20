@@ -8,10 +8,12 @@ urlpatterns = [
     path('',views.index),
     path('superapp/', admin.site.urls),
     path('apis/', include('apis.urls', namespace='apis')),
-    # path("api/dj-rest-auth/", include("dj_rest_auth.urls")),
-    # path("api/dj-rest-auth/registration/", include("dj_rest_auth.registration.urls")),
+    path('fournisseur/', include('fournisseur.urls', namespace='fournisseur')),
+    
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc",),
     path("api/schema/swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     path('ecommerce/', include('ecommerce.urls', namespace='ecommerce'))
+    # path("api/dj-rest-auth/", include("dj_rest_auth.urls"))
+    # path("api/dj-rest-auth/registration/", include("dj_rest_auth.registration.urls"))
 ]
