@@ -2,6 +2,7 @@ from distutils.debug import DEBUG
 import os
 from pathlib import Path
 from environs import Env
+import dj_database_url
 
 env = Env() 
 env.read_env()
@@ -96,7 +97,7 @@ WSGI_APPLICATION = 'superapp.wsgi.application'
 
 
 DATABASES = {
-"default": env.dj_db_url("DATABASE_URL") # new
+    'default': dj_database_url.parse('sqlite:///db.sqlite3')
 }
 
 # AUTH_PASSWORD_VALIDATORS = [
